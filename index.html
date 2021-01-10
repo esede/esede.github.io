@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <style>
+      html{background-color: black;}
+      .contenedorprincipal{
+          flex-direction: column;
+          height: 100vh;
+          width: 100vw;
+          display: grid;
+          grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto;
+          color:black;
+          font-family: Helvetica, sans-serif;
+      }
+      .contenedorprincipal > div {
+        text-align: center;
+        font-size: 30px;
+      }
+      .mini-arriba {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        height: 40%;
+      }
+      .mini-abajo {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        height: 60%;
+      }
+      .rectangulo{
+        background-color= white;
+      }
+      .rectangulo.ancho{
+        grid-row: span 1;
+        grid-column: span 4;
+      }
+      .rectangulo.alto{
+        grid-row: span 4;
+        grid-column: span 1;
+      }
+      .filaminiarriba{
+        grid-row: span 1;
+        grid-column: span 1;
+      }
+      .filaminiabajo{
+        grid-row: span 1;
+        grid-column: span 4;
+      }
+      .gigante {
+        grid-row: span 8;
+        grid-column: span 10;
+        background-color: black;
+      }
+      .color.gris{
+        background-color: gainsboro;
+      }
+      .color.rojo{
+        background-color: rgb(255, 117, 109);
+      }
+      .color.verde{
+        background-color: rgb(133, 222, 119);
+      }
+
+      .color.azul{
+        background-color: rgb(118, 159, 202);
+      }
+      .color.blanco{
+        background-color: white;
+      }
+      .bordeizquierdo{
+        border-left: solid black 5px;
+      }
+      .bordederecho{
+        border-right: solid black 5px;
+      }
+      .bordeabajo{
+        border-bottom: solid black 5px;
+      }
+      .bordearriba{
+        border-top: solid black 5px;
+      }
+      .button{
+        border: none;
+        color: black;
+        font-size: 30px;
+        padding: 20px;
+        text-align: center;
+        vertical-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        height: 10vw;
+        width: 10vw;
+        border: 3px solid black;
+        font-weight: bold;
+      }
+      .button.circular {
+        border-radius: 50%;
+        }
+        .centrar{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .imagenfondo{
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: white; 
+              }
+    </style>
+  </head>
+  <body>
+    <div class="contenedorprincipal">
+        <div id="r1" class="rectangulo ancho color rojo bordeabajo bordederecho centrar">1</div>
+        <div id="r2" class="rectangulo ancho color verde bordeabajo bordederecho centrar">2</div>
+        <div id="r3" class="rectangulo ancho color azul bordeabajo centrar">3</div>  
+        <div id="r4" class="rectangulo alto color rojo bordederecho bordeabajo centrar">4</div>
+        <div id="gigante" class="imagenfondo  gigante">
+          <div class="mini-arriba">
+              <div class="centrar">
+                 <button class="button color gris" onclick="mover(-1)">Boton 1</button>
+              </div>
+              <div class="centrar">
+                 <button class="button color gris" onclick="mover(3)">Boton 2</button>
+              </div>
+              <div class="centrar">
+                 <button class="button color gris" onclick="mover(1)">Boton 3</button>
+              </div>
+          </div>
+          <div class="mini-abajo">
+              <div class="centrar">
+                 <button class="button circular color rojo" onmouseover="cambiarcolor(rojo)" onmouseout="ponercoloractual()">Circular 1</button>     
+              </div>
+              <div class="centrar">
+                 <button class="button circular color verde" onmouseover="cambiarcolor(verde)" onmouseout="ponercoloractual()">Circular 2</button>
+              </div>
+              <div class="centrar">
+                 <button class="button circular color azul" onmouseover="cambiarcolor(azul)" onmouseout="ponercoloractual()">Circular 3</button> 
+              </div>
+          </div>
+        </div>  
+
+        <div id="r5" class="rectangulo alto color rojo bordeabajo bordeizquierdo centrar">5</div>
+        <div id="r6" class="rectangulo alto color verde bordederecho centrar">6</div>
+        <div id="r7" class="rectangulo alto color azul bordeizquierdo centrar">7</div>
+        <div id="r8" class="rectangulo ancho color azul bordederecho bordearriba centrar"> 8 </div>
+        <div id="r9" class="rectangulo ancho color verde bordederecho bordearriba centrar"> 9 </div>
+        <div id="r10" class="rectangulo ancho color rojo bordederecho bordearriba centrar"> 10 </div>
+    </div>
+
+    <script type="text/javascript">
+      const rojo= "rgb(255, 117, 109)";
+      const verde= "rgb(133, 222, 119)";
+      const azul = "rgb(118, 159, 202)";
+      const blanco = "rgb(255, 255, 255)";
+      const diccionario={"r1":rojo,"r2":verde,"r3":azul,"r4":rojo,"r5":rojo,"r6":verde,"r7":azul,"r8":azul,"r9":verde,"r10":rojo};
+      const dicveg={
+      "0":"url('https://bit.ly/38UGqi5')", //zanahorias
+      "1":"url('https://bit.ly/3nc9BCk')", //paltas
+      "2":"url('https://bit.ly/38UGyy5')",//guindas
+      "3":"url('')"}; // vacío, ¿de qué manera más elegante se podría poner un fondo blanco?
+
+      function cambiarcolor(argument) {
+        for (i in diccionario){
+          document.getElementById(i).style.backgroundColor=argument
+        }
+      }
+
+      document.getElementById("gigante").style.backgroundImage=dicveg["1"]; //con esto pongo la imagen 1 al background del centro.
+
+      var posicion=0
+      function mover(entrada){
+          if (entrada==-1 && posicion==0){posicion =2}
+          else if(entrada==3){posicion=3;
+          }
+          else {posicion = (posicion += entrada) % (3)} //2 es el largo del diccionario sin el último vacío.
+        document.getElementById("gigante").style.backgroundImage=dicveg[posicion];
+        }
+
+      function cambiarimagen(argument){
+        document.getElementById("gigante").style.backgroundImage=dicveg[mover(argument)];
+        console.log(argument)
+      }
+
+      const colores_por_defecto= {
+        "rojos":[["r1","r4","r5","r10"],rojo],
+        "verdes":[["r2","r6","r9"],verde],
+        "azules":[["r3","r7","r8"],azul],
+        "blancos":[[],blanco]}
+
+      var colores_actual = JSON.parse(JSON.stringify(colores_por_defecto)); //esta fue la unica forma de todas las que encontré en internet para poder clonar un diccionario. 
+
+    // Para ponerle la función click_perifericos a cada uno de los rectángulos periféricos, la idea es hacer esto varias veces.
+    function agregarfuncion(entrada){
+      for (cadarectangulo of colores_actual[entrada][0]){
+            document.getElementById(cadarectangulo).onclick=function(){click_perifericos(entrada)}}
+    }
+
+    agregarfuncion("rojos");
+    agregarfuncion("verdes");
+    agregarfuncion("azules");
+
+      function ponercoloractual(){
+          for (elcolor in colores_actual){
+              for (rectangulo of colores_actual[elcolor][0]){
+                  document.getElementById(rectangulo).style.backgroundColor=colores_actual[elcolor][1];
+              }   
+          }
+      }
+
+
+      function click_perifericos(argumento){
+          if (argumento === "rojos"){
+              colores_actual["rojos"][0]=colores_actual["rojos"][0].concat(colores_actual["azules"][0]);
+              colores_actual["azules"][0]=[]
+              ponercoloractual()
+            }
+          else if(argumento ==="verdes"){
+              colores_actual["azules"][0]=colores_actual["azules"][0].concat(colores_actual["verdes"][0])
+              colores_actual["verdes"][0]=[]
+              ponercoloractual()
+          }
+          
+          else if(argumento === "azules"){
+              colores_actual["blancos"][0] = colores_actual["azules"][0];
+              colores_actual["rojos"][0]=[];
+              colores_actual["verdes"][0]=[];
+              colores_actual["azules"][0]=[];
+              ponercoloractual();
+          }
+          else if(argumento==="blancos"){
+            colores_actual = JSON.parse(JSON.stringify(colores_por_defecto));
+            console.log("estoy aqui")
+            ponercoloractual();
+          }
+          agregarfuncion("rojos");
+          agregarfuncion("verdes");
+          agregarfuncion("azules");
+          agregarfuncion("blancos");
+      }
+    </script>
+  </body>
+</html>
+
+
+
+
