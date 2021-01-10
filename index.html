@@ -1,10 +1,68 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Página de prueba</title>
-</head>
-<body>
-hola
+  <head>
+    <title>Página de prueba</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <style type="text/css">
+            body{margin:0;}
+            
+            .contenedorprincipal{
+              height: 100vh;
+              width: 100vw;
+              display: grid;
+              grid-template-columns: 4fr 4fr 4fr;
+              grid-template-rows: 2fr 2fr 2fr;
+              font-family: Helvetica, sans-serif;
+              color:white;
+            }
+            .contenedorprincipal > div{
+              display: flex;
+              justify-content: center;
+              align-content: center;
+              flex-direction: column;
+              border:1px solid black;}
 
-</body>
+            .rectangulo{
+             /* background-color: rgba(255, 255, 255, 0.8);*/
+              border: 1px solid rgba(0, 0, 0, 0.8);
+              padding: 20px;
+              font-size: 30px;
+              text-align: center;
+              align-content: center;
+              background-position: center;
+              background-repeat: no-repeat;
+              background-size: cover;
+              background-color: black;
+              text-shadow: 1px 1px 5px red;
+            }
+
+            .pointer{
+              cursor:pointer;
+            }
+
+
+
+            .c1{
+              background-image: url('./images/r1.png');
+            }
+    </style>
+  </head>
+  <body>
+
+    <div class="contenedorprincipal">
+
+      <div id="c1" class="c1 rectangulo pointer" onclick="location.href='./tarea1.html'">Tarea 1 del Curso: <br><br> <b>JavaScript </b> <br>y<br> <b>CSS Grid</b></div>
+      <div id="c2" class="c2 rectangulo">Tarea 2 del Curso: Django <br><br> Proximamente... </div>
+      <div id="c3" class="c3 rectangulo">Proximamente...</div>
+      <div id="c4" class="c4 rectangulo">Proximamente...</div>
+      <div id="c5" class="c5 rectangulo">Proximamente...</div>
+      <div id="c6" class="c6 rectangulo">Proximamente...</div>
+      <div id="c7" class="c7 rectangulo">Proximamente...</div>
+      <div id="c8" class="c8 rectangulo">Proximamente...</div>
+      <div id="c9" class="c9 rectangulo">Proximamente...</div>
+
+    </div>
+
+
+  </body>
 </html>
