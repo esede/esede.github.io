@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        height: 100vh;
+        overflow: hidden;
+    }
+    .imagencolgado{
+        height: 60vh;
+    }
+</style>
+<body>
+    
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+              <h1>EL AHORCADO</h1>
+              <p> Hola, este es el juego del ahorcado, aquí debes escribir una letra y ver si le achuntas.</p>
+            </div>
+          </div>
+
+        <div class="row">
+            <div class="col-3">
+                <div class="row">
+                    <label for="ex1">Escribe acá una letra</label>
+                <p> <input class="form-control type="text" maxlength="1" id="entrada" onkeydown = "if (event.keyCode == 13)
+                    document.getElementById('botoncomprobacion').click()"  > </p>
+                <p> <button class="btn btn-success" onclick="comprobar()" id="botoncomprobacion">Click acá para comprobar</button></p>
+                <span id="alerta"></span>
+            </div>
+        
+
+            <div class="row">
+                <div class="col">
+                    <p id="lineas"></p>
+                    <p id="mensajes"> </p>  
+                    <p id="puntajeTotal"> </p>
+                    <p id="vidas"> </p>  
+                </div>
+            </div>
+        </div>
+          <div class="col-9">
+            <img src="ahorcado.jpg" alt="Dibujo de un ahorcado." id="imagencolgado" class="img-fluid imagencolgado">
+        </div>
+
+        
+        </div>
+      </div>
+  
+
+</body>
+
+
+<script>
+
+    var porMostrar = ""
+    var data = {
+        puntajeTotal : 0,
+        puntajeActual : 0,
+        palabra : "paralelepipedo",
+        letras : this.length,
+        restantes : this.letras,
+        vidas : 3,
+        mostrado : porMostrar,
+        saturacion: 5,
+    }
+    for (var i = 0; i < data.palabra.length; i++){
+        porMostrar += "_ "
+    }
+    document.getElementById("lineas").innerHTML = porMostrar;
+    data.mostrado = porMostrar
+
+
+    var imagencolgado = document.getElementById("imagencolgado");  
+
+    function comprobar(){
+        var entrada = document.getElementById("entrada").value;
+        var trabajando="";
+        var posicion = 0;
+        var puntajeActual =0;
+        var puntajeAhora = data.puntajeTotal
+        for (letra of data.palabra){
+            if (letra == entrada && !(data.mostrado.includes(letra)) ){
+                trabajando += (letra+" ");
+                puntajeActual+=1;
+            }
+            else{
+                trabajando += data.mostrado[posicion*2] +" ";
+            }
+            posicion += 1   
+
+        }
+        data.puntajeTotal+=puntajeActual;
+
+        if (puntajeAhora == data.puntajeTotal){
+            data.vidas--
+            data.saturacion += (data.saturacion**2)
+            imagencolgado.style.filter = "saturate(" +data.saturacion + "%)";
+            document.getElementById("alerta").innerHTML = '<div class="alert alert-danger" role="alert">Has perdido una vida, ahora solo te quedan ' + data.vidas + ' vidas.</div>'
+        }
+        else {
+            document.getElementById("alerta").innerHTML = '<div class="alert alert-success" role="alert">Has acertado, obtuviste ' + puntajeActual + ' puntos.</div>'
+        }
+        data.mostrado = trabajando;
+        console.log(trabajando);
+        document.getElementById("lineas").innerHTML = trabajando;
+        document.getElementById("mensajes").innerHTML = "Has sumado " + puntajeActual + " puntos.";
+        document.getElementById("puntajeTotal").innerHTML = "Tienes " + data.puntajeTotal + " puntos en total.";
+
+
+    }
+    let root = document.querySelector('.imagencolgado');
+
+    root.style.setProperty('saturacion', 100);
+
+
+</script>
+</html>
