@@ -2,137 +2,133 @@
 <html lang="en">
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
-
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
+    <title>Nuevo Ahorcado</title>
 </head>
 <style>
-    .container {
-        height: 100vh;
-        overflow: hidden;
+    body {
+        background-color: black !important;
+        color: white;
     }
-
     .imagencolgado {
-        height: 60vh;
+        height: 40vh;
     }
-
     .lineas {
-        font-size: 25px;
+        font-size: 20px;
     }
 </style>
 
 <body>
-
-
-
     <div class="container">
         <div class="row">
-            <div class="col-sm">
+            <div class="col">
                 <h1>EL AHORCADO</h1>
-                <p> Hola, este es el juego del ahorcado, aquí debes escribir una letra y ver si le achuntas.</p>
+                <p> Este es el juego del ahorcado, aquí debes escribir una letra y ver si aciertas.</p>
             </div>
         </div>
-
         <div class="row">
-            <div class="col-3">
-                <div class="row">
-                    <label for="ex1">Escribe acá una letra</label>
-                    <p> <input class="form-control type=" text" maxlength="1" id="entrada" onkeydown="if (event.keyCode == 13)
-                    document.getElementById('botoncomprobacion').click()"> </p>
-                    <p> <button class="btn btn-success" onclick="comprobar()" id="botoncomprobacion">Click acá para
-                            comprobar</button></p>
-                    <span id="alerta"></span>
-                </div>
+            <div class="col">
+                
+                
+                <label for="ex1">Escribe acá una letra</label>
+                <p> <input class="form-control d-inline-flex" type=" text" maxlength="1" id="entrada"> </p>
+                <p> <button class="btn bg-danger bg-gradient text-white" onclick="comprobar()"
+                        id="botoncomprobacion">Click acá para
+                        comprobar</button></p>
+                <span id="alerta"></span>
+                <p id="puntajeTotal"> </p>
+                <p id="vidas"> </p>
 
 
-                <div class="row">
-                    <div class="col">
-                        <p id="lineas" class="lineas"></p>
-                        <p id="puntajeTotal"> </p>
-                        <p id="vidas"> </p>
-                    </div>
-                </div>
             </div>
-            <div class="col-9">
-                <img src="ahorcado.jpg" alt="Dibujo de un ahorcado." id="imagencolgado" class="img-fluid imagencolgado">
+            <div class="col">
+                <img src="ahorcado.jpg" alt="Dibujo de un ahorcado." id="imagencolgado" class="imagencolgado">
             </div>
-
-
+        </div>
+        <div class="row">
+            <div class="col">
+                <p></p>
+                <div class="column lineas" id="lineas">  </div>
+            </div>
         </div>
     </div>
-
-
 </body>
 
-
 <script>
+    var guion = '<span class="fas fa-minus"> </span>'
 
-    var porMostrar = ""
-    var algoque = {
-        puntajeTotal: 0,
-        puntajeActual: 0,
-        palabra: "paralelepipedo",
-        letras: this.length,
-        restantes: this.letras,
-        vidas: 3,
-        mostrado: porMostrar,
-        saturacion: 5,
+
+    var entradadeletra= document.getElementById("entrada")
+
+    entradadeletra.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        comprobar()
     }
+});
 
-    var palabra = "paralelepipedo"
+
+    var palabrasdificiles = [
+        'pneumonoultramicroscopicsilicovolcanoconiosis',
+        'hipopotomostrosesquipedaliofobia',
+        'parangaricutirimicuaro',
+        'superescalifragilisticoespialidos',
+        'hexakosioihexekontahexafobia',
+        'desanparangaricutirimicuarizador',
+        'paralelepipedos'
+    ]
+
+    var numero_aleatorio = parseInt(Math.random() * (palabrasdificiles.length - 1))
+    var palabra = palabrasdificiles[numero_aleatorio];
 
     function datosconstructor(entrada) {
         this.puntajeTotal = 0;
         this.puntajeActual = 0;
-        this.palabra = "paralelepipedo";
-        this.letras = this.length;
-        this.restantes = this.letras;
-        this.vidas = 5;
-        this.mostrado = funcionprueba();
+        this.palabra = palabrasdificiles[numero_aleatorio];
+        this.vidas = 15;
+        this.array_mostrado = arraidizador();
+        this.mostrado = arraidizador().join(" ")
         this.saturacion = 5;
+        this.conseguidas = ""
+        this.objetopalabra = {}
     }
 
     var estejuego = new datosconstructor();
-
-
-    function funcionprueba() {
-        var porMostrar = ""
-        for (var i = 0; i < palabra.length; i++) {
-            porMostrar += "_ "
-        }
-        return porMostrar
-
-    }
-
+    
     document.getElementById("lineas").innerHTML = estejuego.mostrado;
 
-
-
+    function arraidizador() {
+        var porMostrar = []
+        for (var i = 0; i < palabra.length; i++) {
+            porMostrar.push(guion);
+        }
+        return porMostrar
+    }
 
     var imagencolgado = document.getElementById("imagencolgado");
 
     function comprobar() {
         var entrada = document.getElementById("entrada").value;
-        var trabajando = "";
-        var posicion = 0;
+        if (entrada == "Ü") {
+            victoria();
+        }
         var puntajeActual = 0;
         var puntajeAhora = estejuego.puntajeTotal
-        for (letra of estejuego.palabra) {
-            if (letra == entrada && !(estejuego.mostrado.includes(letra))) {
-                trabajando += (letra + " ");
-                puntajeActual += 1;
-            }
-            else {
-                trabajando += estejuego.mostrado[posicion * 2] + " ";
-            }
-            posicion += 1
+        for (var x = 0 ; x < estejuego.palabra.length ; x++){
+            if (estejuego.palabra[x] == entrada) {
+                if (!estejuego.array_mostrado.includes(entrada)){
+                    puntajeActual += 1;
+                    estejuego.conseguidas += entrada
+                }
 
+                estejuego.array_mostrado[x] = entrada;
+            }
         }
         estejuego.puntajeTotal += puntajeActual;
 
@@ -145,21 +141,42 @@
         else {
             document.getElementById("alerta").innerHTML = '<div class="alert alert-success" role="alert">Has acertado, obtuviste ' + puntajeActual + ' puntos.</div>'
         }
-        estejuego.mostrado = trabajando;
-        console.log(trabajando);
-        document.getElementById("lineas").innerHTML = trabajando;
+        estejuego.mostrado = estejuego.array_mostrado.join(" ")
+        document.getElementById("lineas").innerHTML = estejuego.mostrado;
         document.getElementById("puntajeTotal").innerHTML = "Tienes " + estejuego.puntajeTotal + " puntos en total.";
 
 
         if (estejuego.vidas == 0) {
-            // Swal.fire('Oops...', 'Fracasaste como en tu vida', 'error')
             alertar()
         }
-
+        if (estejuego.puntajeTotal == estejuego.palabra.length) {
+            victoria()
+        }
+        entradadeletra.value = ""
     }
-    let root = document.querySelector('.imagencolgado');
+    
 
-    root.style.setProperty('saturacion', 100);
+
+    function victoria() {
+        Swal.fire({
+            title: 'A veces puedes no perder tanto.',
+            text: 'Pero fracasarás nuevamente en un próximo intento.',
+            icon: 'success',
+            confirmButtonText: 'Reiniciar',
+            backdrop: `
+                        rgba(0,0,123,0.4)
+                        url("https://sweetalert2.github.io/images/nyan-cat.gif")
+                        left top
+                        no-repeat
+                        `
+        }).then((result) => {
+            reiniciar();
+        }
+
+        )
+    }
+
+
 
     function alertar() {
         Swal.fire({
@@ -189,8 +206,16 @@
         })
     }
 
+
+
+
+
+
+
+
     function reiniciar() {
         estejuego = new datosconstructor()
+        estejuego.palabra = palabrasdificiles[parseInt(Math.random() * (palabrasdificiles.length - 1))]
         imagencolgado.style.filter = "saturate(" + estejuego.saturacion + "%)";
         document.getElementById("alerta").innerHTML = ""
         document.getElementById("lineas").innerHTML = estejuego.mostrado;
@@ -200,5 +225,11 @@
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+
+
+
+
 
 </html>
