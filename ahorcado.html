@@ -139,7 +139,7 @@
             document.getElementById("alerta").innerHTML = '<div class="alert alert-danger" role="alert">Has perdido una vida, ahora solo te quedan ' + estejuego.vidas + ' vidas.</div>'
         }
         else {
-            document.getElementById("alerta").innerHTML = '<div class="alert alert-success" role="alert">Has acertado, obtuviste ' + puntajeActual + ' puntos.</div>'
+            document.getElementById("alerta").innerHTML = '<div class="alert alert-success" role="alert">Has acertado, encontraste una letra en ' + puntajeActual + ' posiciones.</div>'
         }
         estejuego.mostrado = estejuego.array_mostrado.join(" ")
         document.getElementById("lineas").innerHTML = estejuego.mostrado;
